@@ -76,6 +76,10 @@ export async function api<T = any>(url: string, options?: RequestInit): Promise<
     ...options,
   });
   const data = await res.json().catch(() => ({}));
+  if (res.status === 401 && typeof window !== "undefined") {
+    window.location.href = "/login";
+    throw new Error("Session expired");
+  }
   if (!res.ok) throw new Error(data.error || `Request failed (${res.status})`);
   return data as T;
 }
