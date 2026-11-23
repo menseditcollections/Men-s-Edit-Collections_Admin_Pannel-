@@ -1,0 +1,132 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --background: #fafafa;
+  --foreground: #171717;
+}
+
+.dark {
+  --background: #0a0a0a;
+  --foreground: #ededed;
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-up { animation: fadeUp .35s ease both; }
+
+@keyframes toastIn {
+  from { opacity: 0; transform: translateY(12px) scale(.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.animate-toast { animation: toastIn .25s ease both; }
+
+/* Hide number input spinners */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+input[type="number"] { -moz-appearance: textfield; appearance: textfield; }
+
+/* ============================================================
+   DARK MODE — overrides scoped to the main content area.
+   Sidebar/top bar/toasts keep their dark styling.
+   Unlayered CSS wins over Tailwind's layered utilities.
+   ============================================================ */
+.dark .app-main .bg-white { background-color: #171717; }
+.dark .app-main .bg-neutral-50 { background-color: #1c1c1c; }
+.dark .app-main .bg-neutral-100 { background-color: #262626; }
+.dark .app-main .bg-neutral-200 { background-color: #333333; }
+.dark .app-main .bg-neutral-300 { background-color: #3d3d3d; }
+
+/* Primary buttons/badges: light pill with dark text in dark mode */
+.dark .app-main .bg-neutral-950,
+.dark .app-main .bg-neutral-900 { background-color: #e5e5e5; }
+.dark .app-main .bg-neutral-950.text-white,
+.dark .app-main .bg-neutral-900.text-white { color: #171717; }
+.dark .app-main .bg-neutral-950.text-white:hover { background-color: #d4d4d4; }
+
+/* Text */
+.dark .app-main .text-neutral-950 { color: #fafafa; }
+.dark .app-main .text-neutral-900 { color: #f0f0f0; }
+.dark .app-main .text-neutral-700 { color: #d4d4d4; }
+.dark .app-main .text-neutral-600 { color: #a3a3a3; }
+.dark .app-main .text-neutral-500 { color: #8f8f8f; }
+.dark .app-main .text-neutral-400 { color: #737373; }
+.dark .app-main .text-neutral-300 { color: #525252; }
+.dark .app-main .hover\:text-neutral-900:hover { color: #fafafa; }
+.dark .app-main .hover\:text-neutral-700:hover { color: #d4d4d4; }
+
+/* Borders & dividers */
+.dark .app-main .border-neutral-200 { border-color: #2e2e2e; }
+.dark .app-main .border-neutral-300 { border-color: #3a3a3a; }
+.dark .app-main .border-neutral-500 { border-color: #555555; }
+.dark .app-main .divide-neutral-100 > * { border-color: #262626; }
+
+/* Soft accent surfaces */
+.dark .app-main .bg-amber-50 { background-color: #33270f; }
+.dark .app-main .bg-amber-100 { background-color: #3f3013; }
+.dark .app-main .text-amber-700 { color: #fbbf24; }
+.dark .app-main .bg-emerald-100 { background-color: #123528; }
+.dark .app-main .text-emerald-700,
+.dark .app-main .text-emerald-600 { color: #34d399; }
+.dark .app-main .bg-sky-100 { background-color: #0c2d48; }
+.dark .app-main .text-sky-700,
+.dark .app-main .text-sky-600 { color: #38bdf8; }
+.dark .app-main .bg-violet-100 { background-color: #2e1065; }
+.dark .app-main .text-violet-700 { color: #a78bfa; }
+.dark .app-main .bg-red-100 { background-color: #3f1d1d; }
+.dark .app-main .text-red-700,
+.dark .app-main .text-red-600 { color: #f87171; }
+.dark .app-main .border-red-200 { border-color: #5b2626; }
+.dark .app-main .border-amber-200 { border-color: #5b4420; }
+.dark .app-main .border-amber-300 { border-color: #6b5326; }
+.dark .app-main .hover\:bg-red-50:hover { background-color: #3f1d1d; }
+
+/* Hover states */
+.dark .app-main .hover\:bg-neutral-50:hover { background-color: #1f1f1f; }
+.dark .app-main .hover\:bg-neutral-100:hover { background-color: #2a2a2a; }
+.dark .app-main .hover\:bg-neutral-200:hover { background-color: #333333; }
+.dark .app-main .hover\:bg-neutral-300:hover { background-color: #3d3d3d; }
+
+/* Focus rings */
+.dark .app-main .focus\:ring-neutral-900:focus { --tw-ring-color: #a3a3a3; }
+
+/* ============================================================
+   PRINT — only the receipt is visible when printing
+   ============================================================ */
+@media print {
+  body * { visibility: hidden; }
+  #receipt-print, #receipt-print * { visibility: visible; }
+  #receipt-print {
+    position: fixed;
+    inset: 0;
+    margin: 0 auto;
+    width: 80mm;
+    max-width: 100%;
+    background: #ffffff !important;
+    color: #000000 !important;
+    padding: 8mm 4mm;
+  }
+  #receipt-print * {
+    background: transparent !important;
+    color: #000000 !important;
+    border-color: #dddddd !important;
+    box-shadow: none !important;
+  }
+  #receipt-print .no-print { display: none !important; }
+}
