@@ -45,3 +45,4 @@ next-env.d.ts
 
 # session cookies
 cookies.txt
+!.env.example
