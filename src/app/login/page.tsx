@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useState } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { api, useToast } from "@/components/ui";
 import { Eye, EyeOff } from "lucide-react";
@@ -13,6 +13,11 @@ function LoginForm() {
   const router = useRouter();
   const params = useSearchParams();
   const toast = useToast();
+  const userRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (window.matchMedia("(pointer: fine)").matches) userRef.current?.focus();
+  }, []);
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
@@ -39,8 +44,9 @@ function LoginForm() {
       </div>
       <label className="block text-sm font-medium mb-1.5">Username</label>
       <input
+        ref={userRef}
         type="text" value={username} onChange={(e) => setUsername(e.target.value)}
-        autoFocus required autoComplete="username" placeholder="Enter username"
+        required autoComplete="username" placeholder="Enter username"
         className="w-full px-4 py-3 rounded-xl border border-neutral-200 focus:outline-none focus:ring-2 focus:ring-neutral-900 text-base mb-3"
       />
       <label className="block text-sm font-medium mb-1.5">Password</label>
@@ -67,7 +73,7 @@ function LoginForm() {
 
 export default function LoginPage() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-neutral-950 px-4">
+    <div className="min-h-dvh flex items-center justify-center bg-neutral-950 px-4 py-10">
       <Suspense>
         <LoginForm />
       </Suspense>
